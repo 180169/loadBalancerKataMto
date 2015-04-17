@@ -1,13 +1,14 @@
 package edu.iis.mto.serverloadbalancer;
 
+import org.junit.Test;
+
 import static edu.iis.mto.serverloadbalancer.CurrentPercentageLoadMatcher.hasPercentageLoadOf;
 import static edu.iis.mto.serverloadbalancer.ServerBuilder.server;
 import static edu.iis.mto.serverloadbalancer.ServerLoadBalancer.balance;
+import static edu.iis.mto.serverloadbalancer.ServerVmsCountMatcher.hasVmCountEqualTo;
 import static edu.iis.mto.serverloadbalancer.VmBuilder.vm;
-import org.hamcrest.Matcher;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import org.junit.Test;
 
 public class ServerLoadBalancerTest {
 
@@ -58,10 +59,6 @@ public class ServerLoadBalancerTest {
         assertThat( server, hasVmCountEqualTo( 2 ) );
         assertThat( "the server should contain vm", server.contains( vm1 ) );
         assertThat( "the server should contain vm", server.contains( vm2 ) );
-    }
-
-    private Matcher<? super Server> hasVmCountEqualTo( int expectedCount ) {
-        return new ServerVmsCountMatcher( expectedCount );
     }
 
     private Server a( ServerBuilder builder ) {
