@@ -38,13 +38,31 @@ public class ServerLoadBalancerTest {
 
     @Test
     public void balancingOneServerWithTenSlotsCapacity_andOneSlotVm_fillTheServerWithTenPercent() {
-        Server server = a( server().withCapacity( 100 ) );
-        Vm vm = a( vm().withSize( 10 ) );
+        Server server = a( server().withCapacity( 10 ) );
+        Vm vm = a( vm().withSize( 1 ) );
 
         balance( aListOfServersWith( server ), aListOfVMWith( vm ) );
 
         assertThat( server, hasPercentageLoadOf( 10.0d ) );
         assertThat( "the server should contain vm", server.contains( vm ) );
+    }
+
+    @Test
+    public void balancingAServerWithEnoughRoom_getsFilledWithAllVms() {
+        Server server = a( server().withCapacity( 50 ) );
+        Vm vm1 = a( vm().withSize( 10 ) );
+        Vm vm2 = a( vm().withSize( 20 ) );
+
+        balance( aListOfServersWith( server ), aListOfVMWith( vm2, vm2 ) );
+        Server server = a( server().withCapacity( 10 ) );
+        Vm vm1 = a( vm().withSize( 1 ) );
+        Vm vm2 = a( vm().withSize( 2 ) );
+
+        balance( aListOfServersWith( server ), aListOfVMWith( vm1, vm2 ) );
+        assertThat( server, hasPercentageLoadOf( 30.0d ) );
+        assertThat( server, hasVmCountEqualTo( 2 ) );
+        assertThat( "the server should contain vm", server.contains( vm1 ) );
+        assertThat( "the server should contain vm", server.contains( vm2 ) );
     }
 
     private Server a( ServerBuilder builder ) {
