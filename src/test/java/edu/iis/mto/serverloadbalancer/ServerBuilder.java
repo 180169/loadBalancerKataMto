@@ -25,12 +25,16 @@ class ServerBuilder implements Builder<Server> {
 
     public Server build() {
         Server server = new Server( this.capacity );
-        if ( initialLoad != 0 ) {
-            int expectedLoad = (int) ( initialLoad / 100.0d * (double) server.getCapacity() );
-            server.addVm( VmBuilder.vm().withSize( expectedLoad ).build() );
-        }
+        setInitialLoad( server );
         return server;
 
+    }
+
+    public void setInitialLoad( Server server ) {
+        if ( initialLoad != 0 ) {
+            int expectedLoad = (int) ( initialLoad / server.MAXIMUM_LOAD * (double) server.getCapacity() );
+            server.addVm( VmBuilder.vm().withSize( expectedLoad ).build() );
+        }
     }
 
     ServerBuilder withInitialLoad( int initialLoad ) {
