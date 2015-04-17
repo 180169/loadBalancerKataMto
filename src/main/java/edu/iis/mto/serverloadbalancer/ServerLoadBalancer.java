@@ -42,7 +42,7 @@ public class ServerLoadBalancer {
     public static Server findTheLeastLowdedServer( List<Server> servers ) {
         Server theLeastLoadedServer = null;
         for ( Server server : servers ) {
-            if ( theLeastLoadedServer == null || theLeastLoadedServer.currentLoadPercentage > server.currentLoadPercentage ) {
+            if ( theLeastLoadedServer == null || theLeastLoadedServer.getCurrentLoadPercentage() > server.getCurrentLoadPercentage() ) {
                 theLeastLoadedServer = server;
             }
         }

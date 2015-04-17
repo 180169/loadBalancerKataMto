@@ -15,8 +15,8 @@ import java.util.List;
 public class Server {
 
     public final double MAXIMUM_LOAD = 100.0d;
-    public double currentLoadPercentage = 0;
-    public final int capacity;
+    private double currentLoadPercentage = 0;
+    private final int capacity;
     private List<Vm> vms = new ArrayList<Vm>();
 
     Server( int capacity ) {
@@ -41,6 +41,10 @@ public class Server {
 
     public int getCapacity() {
         return capacity;
+    }
+
+    public double getCurrentLoadPercentage() {
+        return currentLoadPercentage;
     }
 
     boolean canContain( Vm vm ) {
