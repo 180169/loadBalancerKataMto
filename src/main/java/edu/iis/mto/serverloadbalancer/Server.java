@@ -24,17 +24,23 @@ public class Server {
     }
 
     public boolean contains( Vm vm ) {
-        return true;
+        return vms.contains( vm );
 
     }
 
     void addVm( Vm vm ) {
         vms.add( vm );
-        currentLoadPercentage += (double) vm.size / (double) this.capacity * MAXIMUM_LOAD;
+        this.currentLoadPercentage += (double) vm.size / (double) this.capacity * MAXIMUM_LOAD;
+
     }
 
     public int vmsCount() {
         return vms.size();
 
     }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
 }

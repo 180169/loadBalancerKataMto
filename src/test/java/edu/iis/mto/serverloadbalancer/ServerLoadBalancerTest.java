@@ -80,8 +80,8 @@ public class ServerLoadBalancerTest {
         return builder.build();
     }
 
-    private Server[] aListOfServersWith( Server server ) {
-        return new Server[]{ server };
+    private Server[] aListOfServersWith( Server... servers ) {
+        return servers;
     }
 
     private Vm[] aListOfVM() {
