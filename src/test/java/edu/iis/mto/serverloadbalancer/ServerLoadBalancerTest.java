@@ -1,12 +1,12 @@
 package edu.iis.mto.serverloadbalancer;
 
 import static edu.iis.mto.serverloadbalancer.CurrentPercentageLoadMatcher.hasPercentageLoadOf;
-import static edu.iis.mto.serverloadbalancer.ServerLoadBalancer.balance;
 import static edu.iis.mto.serverloadbalancer.ServerBuilder.server;
+import static edu.iis.mto.serverloadbalancer.ServerLoadBalancer.balance;
 import static edu.iis.mto.serverloadbalancer.VmBuilder.vm;
+import org.hamcrest.Matcher;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-
 import org.junit.Test;
 
 public class ServerLoadBalancerTest {
@@ -49,11 +49,6 @@ public class ServerLoadBalancerTest {
 
     @Test
     public void balancingAServerWithEnoughRoom_getsFilledWithAllVms() {
-        Server server = a( server().withCapacity( 50 ) );
-        Vm vm1 = a( vm().withSize( 10 ) );
-        Vm vm2 = a( vm().withSize( 20 ) );
-
-        balance( aListOfServersWith( server ), aListOfVMWith( vm2, vm2 ) );
         Server server = a( server().withCapacity( 10 ) );
         Vm vm1 = a( vm().withSize( 1 ) );
         Vm vm2 = a( vm().withSize( 2 ) );
@@ -63,6 +58,10 @@ public class ServerLoadBalancerTest {
         assertThat( server, hasVmCountEqualTo( 2 ) );
         assertThat( "the server should contain vm", server.contains( vm1 ) );
         assertThat( "the server should contain vm", server.contains( vm2 ) );
+    }
+
+    private Matcher<? super Server> hasVmCountEqualTo( int expectedCount ) {
+        return new ServerVmsCountMatcher( expectedCount );
     }
 
     private Server a( ServerBuilder builder ) {
@@ -81,8 +80,8 @@ public class ServerLoadBalancerTest {
         return new Vm[]{};
     }
 
-    private Vm[] aListOfVMWith( Vm vm ) {
-        return new Vm[]{ vm };
+    private Vm[] aListOfVMWith( Vm... vms ) {
+        return vms;
     }
 
 }
