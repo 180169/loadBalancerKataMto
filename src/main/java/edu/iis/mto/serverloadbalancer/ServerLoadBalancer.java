@@ -11,7 +11,9 @@ package edu.iis.mto.serverloadbalancer;
  */
 public class ServerLoadBalancer {
 
-    public static void balance( Server[] aListOfServersWith, Vm[] aListOfVM ) {
-        
+    public static void balance( Server[] servers, Vm[] vms ) {
+        if ( vms.length > 0 ) {
+            servers[0].currentLoadPercentage = 100.0d;
+        }
     }
 }

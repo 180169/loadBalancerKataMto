@@ -9,16 +9,20 @@ package edu.iis.mto.serverloadbalancer;
  *
  * @author Godzio
  */
-public class Server {
+class VmBuilder {
 
-    public double currentLoadPercentage;
+    private int size;
 
-    Server( int capacity ) {
+    public VmBuilder() {
     }
 
-    public boolean contains( Vm vm ) {
-        return true;
+    VmBuilder withSize( int size ) {
+        this.size = size;
+        return this;
+    }
 
+    Vm build() {
+        return new Vm( size );
     }
 
 }
