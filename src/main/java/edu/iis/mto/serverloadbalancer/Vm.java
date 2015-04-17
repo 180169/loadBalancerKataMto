@@ -9,6 +9,6 @@ package edu.iis.mto.serverloadbalancer;
  *
  * @author Godzio
  */
-public class VM {
+public class Vm {
     
 }

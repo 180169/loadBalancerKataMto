@@ -11,7 +11,7 @@ package edu.iis.mto.serverloadbalancer;
  */
 public class ServerLoadBalancer {
 
-    public static void balance( Server[] aListOfServersWith, VM[] aListOfVM ) {
+    public static void balance( Server[] aListOfServersWith, Vm[] aListOfVM ) {
         
     }
 }
