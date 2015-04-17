@@ -30,7 +30,7 @@ public class Server {
 
     void addVm( Vm vm ) {
         vms.add( vm );
-        this.currentLoadPercentage += (double) vm.size / (double) this.capacity * MAXIMUM_LOAD;
+        this.currentLoadPercentage = calculatePercentageLoad( vm );
 
     }
 
@@ -44,11 +44,15 @@ public class Server {
     }
 
     boolean canContain( Vm vm ) {
-        if ( this.currentLoadPercentage + (double) vm.size / (double) this.capacity * MAXIMUM_LOAD <= MAXIMUM_LOAD ) {
+        if ( calculatePercentageLoad( vm ) <= MAXIMUM_LOAD ) {
             return true;
         } else {
             return false;
         }
+    }
+
+    private double calculatePercentageLoad( Vm vm ) {
+        return this.currentLoadPercentage + (double) vm.size / (double) this.capacity * MAXIMUM_LOAD;
     }
 
 }
