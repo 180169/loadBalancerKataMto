@@ -82,6 +82,38 @@ public class ServerLoadBalancerTest {
         assertThat( "server should not contains vm", !server.contains( vm ) );
     }
 
+    @Test
+    public void balance_serversAndVms() {
+        Server leastLowdedServer = a( server().withCapacity( 100 ).withInitialLoad( 10 ) );
+        Server lowdedServer = a( server().withCapacity( 100 ).withInitialLoad( 50 ) );
+        Server theMostLowdedServer = a( server().withCapacity( 100 ).withInitialLoad( 90 ) );
+
+        Vm bigVM = a( vm().withSize( 90 ) );
+        Vm midSizeVM = a( vm().withSize( 15 ) );
+        Vm secondMidSizeVM = a( vm().withSize( 15 ) );
+        Vm thirdMidSizeVM = a( vm().withSize( 15 ) );
+        Vm smallVM = a( vm().withSize( 10 ) );
+        Vm secondSmallVM = a( vm().withSize( 10 ) );
+
+        balance( aListOfServersWith( theMostLowdedServer, lowdedServer, leastLowdedServer ),
+                aListOfVMWith( bigVM, midSizeVM, secondMidSizeVM, thirdMidSizeVM, smallVM, secondSmallVM ) );
+
+        assertThat( "the least lowded server contains ", leastLowdedServer.contains( bigVM ) );
+        assertThat( leastLowdedServer, hasVmCountEqualTo( 2 ) );//additional one for the initial one
+
+        assertThat( "lowded server contains midSize VM", lowdedServer.contains( midSizeVM ) );
+        assertThat( "lowded server contains midSize VM", lowdedServer.contains( secondMidSizeVM ) );
+        assertThat( "lowded server contains midSize VM", lowdedServer.contains( thirdMidSizeVM ) );
+        assertThat( lowdedServer, hasVmCountEqualTo( 4 ) );//additional one for the initial one
+
+        assertThat( "the least lowded server contains ", theMostLowdedServer.contains( smallVM ) );
+        assertThat( theMostLowdedServer, hasVmCountEqualTo( 2 ) );//additional one for the initial one
+
+        assertThat( "the second small Vm is not contained on any server",
+                !leastLowdedServer.contains( secondSmallVM ) && !lowdedServer.contains( secondSmallVM ) && !theMostLowdedServer.contains( secondSmallVM ) );
+
+    }
+
     private Server a( ServerBuilder builder ) {
         return builder.build();
     }
