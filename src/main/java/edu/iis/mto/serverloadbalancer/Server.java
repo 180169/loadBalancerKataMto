@@ -43,4 +43,12 @@ public class Server {
         return capacity;
     }
 
+    boolean canContain( Vm vm ) {
+        if ( this.currentLoadPercentage + (double) vm.size / (double) this.capacity * MAXIMUM_LOAD <= MAXIMUM_LOAD ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
