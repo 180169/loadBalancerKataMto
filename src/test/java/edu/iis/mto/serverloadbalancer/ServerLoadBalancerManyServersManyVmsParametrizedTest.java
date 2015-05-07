@@ -43,7 +43,14 @@ public class ServerLoadBalancerManyServersManyVmsParametrizedTest extends Server
                 createIntTable( 3, 1, 1 ),
                 createDoubleTable( 100.0, 100.0 ),
                 new int[][]{ createIntTable( 1, 2 ), createIntTable( 0 ) } },
-            
+            { createIntTable( 5, 3, 7 ),
+                createIntTable( 2, 2, 2, 2, 2, 2 ),
+                createDoubleTable( 80.0, 66.66, 85.71 ),
+                new int[][]{ createIntTable( 0, 4 ), createIntTable( 1 ), createIntTable( 3, 2, 5 ) } },
+            { createIntTable( 4, 5, 6, 7, 8 ),
+                createIntTable( 8, 7, 6, 5, 4 ),
+                createDoubleTable( 100.0, 100.0, 100.0, 100.0, 100.0 ),
+                new int[][]{ createIntTable( 4 ), createIntTable( 3 ), createIntTable( 2 ), createIntTable( 1 ), createIntTable( 0 ) } }
         } );
     }
 
