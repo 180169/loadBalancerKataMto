@@ -10,6 +10,8 @@ import static edu.iis.mto.serverloadbalancer.ServerBuilder.server;
 import static edu.iis.mto.serverloadbalancer.VmBuilder.vm;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ServerLoadBalancerTest {
 
@@ -56,6 +58,10 @@ public class ServerLoadBalancerTest {
         balance( new Server[]{ theServer }, new Vm[]{ firstVm, secondVm } );
         
         assertThat( theServer, hasPercentageLoad( 100.0d ) );
+        assertEquals( theServer.numberOfVms(), 2 );
+        assertTrue( theServer.contains( firstVm ) );
+        assertTrue( theServer.contains( secondVm ) );
+    }
     }
 
     private Server a( ServerBuilder builder ) {
