@@ -71,7 +71,21 @@ public class ServerLoadBalancerTest {
         Vm theVm = a( vm().withSize( 10 ) );
 
         balance( createServersTable( firstServer, secondServer ), createVmTable( theVm ) );
+
         assertThat( secondServer.contains( theVm ), is( true ) );
+    }
+
+    @Test
+    public void ServerOverloaded() {
+        Server theServer = a( server().withCapacity( 10 ) );
+        Vm firstVm = a( vm().withSize( 10 ) );
+        Vm secondVm = a( vm().withSize( 10 ) );
+
+        balance( createServersTable( theServer ), createVmTable( firstVm, secondVm ) );
+
+        assertThat( theServer, hasPercentageLoad( 100.0d ) );
+        assertThat( theServer.contains( firstVm ), is( true ) );
+        assertThat( theServer.contains( secondVm ), is( false ) );
     }
 
     private static Vm[] createVmTable( Vm... vms ) {
