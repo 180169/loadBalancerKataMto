@@ -88,6 +88,23 @@ public class ServerLoadBalancerTest {
         assertThat( theServer.contains( secondVm ), is( false ) );
     }
 
+    @Test
+    public void ServersAndMachines() {
+        Server firstServer = a( server().withCapacity( 10 ) );
+        Server secondServer = a( server().withCapacity( 50 ) );
+        Vm firstVm = a( vm().withSize( 10 ) );
+        Vm secondVm = a( vm().withSize( 10 ) );
+        Vm thirdVm = a( vm().withSize( 40 ) );
+
+        balance( createServersTable( firstServer, secondServer ), createVmTable( firstVm, secondVm, thirdVm ) );
+
+        assertThat( firstServer, hasPercentageLoad( 100.0d ) );
+        assertThat( secondServer, hasPercentageLoad( 100.0d ) );
+        assertThat( firstServer.contains( firstVm ), is( true ) );
+        assertThat( secondServer.contains( secondVm ), is( true ) );
+        assertThat( secondServer.contains( thirdVm ), is( true ) );
+    }
+
     private static Vm[] createVmTable( Vm... vms ) {
         return vms;
     }
