@@ -15,10 +15,14 @@ public class LoadBalancer {
 
         for ( Vm vm : vms ) {
             Server theLeastLoadedServer = findTheLeastLoadedServer( servers );
-            if ( theLeastLoadedServer.currentLoad + vm.getSize() / theLeastLoadedServer.capacity * 100.0d <= 100.0d ) {
+            if ( chechIfVmFitOnServer( theLeastLoadedServer, vm ) ) {
                 theLeastLoadedServer.addVm( vm );
             }
         }
+    }
+
+    private static boolean chechIfVmFitOnServer( Server theLeastLoadedServer, Vm vm ) {
+        return theLeastLoadedServer.calculateLoad( vm ) <= Server.MAXIMUM_LOAD;
     }
 
     private static Server findTheLeastLoadedServer( Server[] servers ) {

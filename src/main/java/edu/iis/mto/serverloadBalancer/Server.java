@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Server {
 
-    private static final double MAXIMUM_LOAD = 100.0;
+    public static final double MAXIMUM_LOAD = 100.0;
     double currentLoad;
     int capacity;
     List< Vm> vms = new ArrayList<Vm>();
@@ -28,12 +28,13 @@ public class Server {
     }
 
     public void addVm( Vm vm ) {
+        currentLoad = calculateLoad( vm );
         vms.add( vm );
-        calculateCurrentLoad( vm );
+
     }
 
-    private void calculateCurrentLoad( Vm vm ) {
-        currentLoad += ( (double) vm.getSize() / (double) capacity ) * MAXIMUM_LOAD;
+    public double calculateLoad( Vm vm ) {
+        return currentLoad + ( (double) vm.getSize() / (double) capacity ) * MAXIMUM_LOAD;
     }
 
     public int numberOfVms() {
