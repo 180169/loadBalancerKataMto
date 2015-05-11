@@ -31,7 +31,7 @@ public class LoadBalancer {
             if ( theLeastLoadedServer == null ) {
                 theLeastLoadedServer = server;
             } else {
-                if ( server.currentLoad < theLeastLoadedServer.currentLoad ) {
+                if ( server.getCurrentLoad() < theLeastLoadedServer.getCurrentLoad() ) {
                     theLeastLoadedServer = server;
                 }
             }

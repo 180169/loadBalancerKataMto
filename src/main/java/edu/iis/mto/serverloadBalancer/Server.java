@@ -15,26 +15,26 @@ import java.util.List;
 public class Server {
 
     public static final double MAXIMUM_LOAD = 100.0;
-    double currentLoad;
-    int capacity;
-    List< Vm> vms = new ArrayList<Vm>();
+    private double currentLoad;
+    private final int capacity;
+    private final List< Vm> vms = new ArrayList<Vm>();
 
     public Server( int capacity ) {
         this.capacity = capacity;
     }
 
     public double hasCurrentPercentageLoad() {
-        return currentLoad;
+        return getCurrentLoad();
     }
 
     public void addVm( Vm vm ) {
-        currentLoad = calculateLoad( vm );
+        setCurrentLoad( calculateLoad( vm ) );
         vms.add( vm );
 
     }
 
     public double calculateLoad( Vm vm ) {
-        return currentLoad + ( (double) vm.getSize() / (double) capacity ) * MAXIMUM_LOAD;
+        return getCurrentLoad() + ( (double) vm.getSize() / (double) capacity ) * MAXIMUM_LOAD;
     }
 
     public int numberOfVms() {
@@ -44,4 +44,13 @@ public class Server {
     public boolean contains( Vm vm ) {
         return vms.contains( vm );
     }
+
+    public double getCurrentLoad() {
+        return currentLoad;
+    }
+
+    public void setCurrentLoad( double currentLoad ) {
+        this.currentLoad = currentLoad;
+    }
+
 }
