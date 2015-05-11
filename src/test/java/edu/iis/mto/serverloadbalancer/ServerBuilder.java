@@ -9,6 +9,7 @@ import edu.iis.mto.serverloadBalancer.Server;
 class ServerBuilder {
 
     private int capacity;
+    private int initialLoad = 0;
 
     public ServerBuilder withCapacity( int capacity ) {
         this.capacity = capacity;
@@ -17,11 +18,22 @@ class ServerBuilder {
     }
 
     public Server build() {
-        return new Server( capacity );
+        Server server = new Server( capacity );
+        if ( initialLoad != 0 ) {
+            int expectedLoad = (int) ( initialLoad / 100.0 * (double) capacity );
+            server.addVm( new VmBuilder().withSize( expectedLoad ).build() );
+        }
+        return server;
     }
 
     public static ServerBuilder server() {
         return new ServerBuilder();
+    }
+
+    ServerBuilder withInitialLoad( int initialLoad ) {
+        this.initialLoad = initialLoad;
+        return this;
+
     }
 
 }
