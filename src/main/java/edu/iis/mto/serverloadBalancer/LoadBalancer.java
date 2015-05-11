@@ -5,15 +5,13 @@
  */
 package edu.iis.mto.serverloadBalancer;
 
-import java.util.List;
-
 /**
  *
  * @author Godzio
  */
 public class LoadBalancer {
 
-    public static void balance( Server theServer, List<Vm> emptyListOfVms ) {
+    public static void balance( Server[] servers, Vm[] vms ) {
     }
     
 }
