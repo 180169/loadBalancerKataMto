@@ -47,6 +47,17 @@ public class ServerLoadBalancerTest {
         assertThat( theServer, hasPercentageLoad( 50.0d ) );
     }
 
+    @Test
+    public void oneServerFilledWithTwoVms() {
+        Server theServer = a( server().withCapacity( 20 ) );
+        Vm firstVm = a( vm().withSize( 10 ) );
+        Vm secondVm = a( vm().withSize( 10 ) );
+
+        balance( new Server[]{ theServer }, new Vm[]{ firstVm, secondVm } );
+        
+        assertThat( theServer, hasPercentageLoad( 100.0d ) );
+    }
+
     private Server a( ServerBuilder builder ) {
         return builder.build();
     }
