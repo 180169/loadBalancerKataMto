@@ -11,6 +11,7 @@ package edu.iis.mto.serverloadBalancer;
  */
 public class Server {
 
+    private static final double MAXIMUM_LOAD = 100.0;
     double currentLoad;
     int capacity;
 
@@ -22,4 +23,11 @@ public class Server {
         return currentLoad;
     }
 
+    public void addVm( Vm vm ) {
+        calculateCurrentLoad( vm );
+    }
+
+    private void calculateCurrentLoad( Vm vm ) {
+        currentLoad = ( (double) vm.getSize() / (double) capacity ) * MAXIMUM_LOAD;
+    }
 }

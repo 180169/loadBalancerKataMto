@@ -13,7 +13,7 @@ public class LoadBalancer {
 
     public static void balance( Server[] servers, Vm[] vms ) {
         for ( Vm vm : vms ) {
-            servers[0].currentLoad = ( (double) vm.getSize() / (double) servers[0].capacity ) * 100.0d;
+            servers[0].addVm( vm );
         }
     }
 
