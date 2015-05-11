@@ -40,8 +40,16 @@ public class ServerLoadBalancerTest {
         return builder.build();
     }
 
+    private Vm a( VmBuilder builder ) {
+        return builder.build();
+    }
+
     private Vm[] emptyListOfVms() {
         return new Vm[]{};
+    }
+
+    private VmBuilder vm() {
+        return new VmBuilder();
     }
 
 }
