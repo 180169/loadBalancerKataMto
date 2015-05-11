@@ -63,6 +63,16 @@ public class ServerLoadBalancerTest {
         assertTrue( theServer.contains( secondVm ) );
     }
 
+    @Test
+    public void TwoServerVmShouldBeOnLessLoadedOne() {
+        Server firstServer = a( server().withCapacity( 100 ).withInitialLoad( 50 ) );
+        Server secondServer = a( server().withCapacity( 100 ) );
+        Vm theVm = a( vm().withSize( 10 ) );
+
+        balance( createServersTable( firstServer, secondServer ), createVmTable( theVm ) );
+        assertTrue( secondServer.contains( theVm ) );
+    }
+
     private static Vm[] createVmTable( Vm... vms ) {
         return vms;
     }
