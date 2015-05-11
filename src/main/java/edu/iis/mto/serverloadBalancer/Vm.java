@@ -11,7 +11,10 @@ package edu.iis.mto.serverloadBalancer;
  */
 public class Vm {
 
+    private int size;
+
     public Vm( int size ) {
+        this.size = size;
     }
-    
+
 }
