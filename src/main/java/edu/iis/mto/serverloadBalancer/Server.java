@@ -10,13 +10,16 @@ package edu.iis.mto.serverloadBalancer;
  * @author Godzio
  */
 public class Server {
+
     double currentLoad;
+    int capacity;
 
     public Server( int capacity ) {
+        this.capacity = capacity;
     }
 
     public double hasCurrentPercentageLoad() {
         return currentLoad;
     }
-    
+
 }

@@ -12,8 +12,8 @@ package edu.iis.mto.serverloadBalancer;
 public class LoadBalancer {
 
     public static void balance( Server[] servers, Vm[] vms ) {
-        if ( vms.length > 0 ) {
-            servers[0].currentLoad = 100.0d;
+        for ( Vm vm : vms ) {
+            servers[0].currentLoad = ( (double) vm.getSize() / (double) servers[0].capacity ) * 100.0d;
         }
     }
 
