@@ -14,7 +14,10 @@ public class LoadBalancer {
     public static void balance( Server[] servers, Vm[] vms ) {
 
         for ( Vm vm : vms ) {
-            findTheLeastLoadedServer( servers ).addVm( vm );
+            Server theLeastLoadedServer = findTheLeastLoadedServer( servers );
+            if ( theLeastLoadedServer.currentLoad + vm.getSize() / theLeastLoadedServer.capacity * 100.0d <= 100.0d ) {
+                theLeastLoadedServer.addVm( vm );
+            }
         }
     }
 
