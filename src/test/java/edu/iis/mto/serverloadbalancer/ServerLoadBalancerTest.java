@@ -24,7 +24,7 @@ public class ServerLoadBalancerTest {
     public void oneEmptyServer() {
         Server theServer = a( server().withCapacity( 5 ) );
 
-        balance( new Server[]{ theServer }, emptyListOfVms() );
+        balance( createServersTable( theServer ), emptyListOfVms() );
 
         assertThat( theServer, hasPercentageLoad( 0.0d ) );
     }
@@ -34,7 +34,7 @@ public class ServerLoadBalancerTest {
         Server theServer = a( server().withCapacity( 1 ) );
         Vm theVm = a( vm().withSize( 1 ) );
 
-        balance( new Server[]{ theServer }, new Vm[]{ theVm } );
+        balance( createServersTable( theServer ), new Vm[]{ theVm } );
 
         assertThat( theServer, hasPercentageLoad( 100.0d ) );
     }
@@ -44,7 +44,7 @@ public class ServerLoadBalancerTest {
         Server theServer = a( server().withCapacity( 10 ) );
         Vm theVm = a( vm().withSize( 5 ) );
 
-        balance( new Server[]{ theServer }, new Vm[]{ theVm } );
+        balance( createServersTable( theServer ), new Vm[]{ theVm } );
 
         assertThat( theServer, hasPercentageLoad( 50.0d ) );
     }
@@ -55,13 +55,20 @@ public class ServerLoadBalancerTest {
         Vm firstVm = a( vm().withSize( 10 ) );
         Vm secondVm = a( vm().withSize( 10 ) );
 
-        balance( new Server[]{ theServer }, new Vm[]{ firstVm, secondVm } );
-        
+        balance( createServersTable( theServer ), createVmTable( firstVm, secondVm ) );
+
         assertThat( theServer, hasPercentageLoad( 100.0d ) );
         assertEquals( theServer.numberOfVms(), 2 );
         assertTrue( theServer.contains( firstVm ) );
         assertTrue( theServer.contains( secondVm ) );
     }
+
+    private static Vm[] createVmTable( Vm... vms ) {
+        return vms;
+    }
+
+    private static Server[] createServersTable( Server... servers ) {
+        return servers;
     }
 
     private Server a( ServerBuilder builder ) {
