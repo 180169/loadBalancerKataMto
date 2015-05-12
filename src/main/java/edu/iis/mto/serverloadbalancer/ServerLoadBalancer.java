@@ -13,19 +13,24 @@ public class ServerLoadBalancer {
 
     public static void balance( Server[] servers, Vm[] vms ) {
         for ( Vm vm : vms ) {
-            Server theLeastLoadedServer = null;
-            for ( Server server : servers ) {
-                if ( theLeastLoadedServer == null ) {
-                    theLeastLoadedServer = server;
-                } else {
-                    if ( theLeastLoadedServer.currentPercentageLoad() > server.currentPercentageLoad() ) {
-                        theLeastLoadedServer = server;
-                    }
-                }
-
-            }
+            Server theLeastLoadedServer = findTheLeastLoadedServer( servers );
             theLeastLoadedServer.add( vm );
         }
+    }
+
+    public static Server findTheLeastLoadedServer( Server[] servers ) {
+        Server theLeastLoadedServer = null;
+        for ( Server server : servers ) {
+            if ( theLeastLoadedServer == null ) {
+                theLeastLoadedServer = server;
+            } else {
+                if ( theLeastLoadedServer.currentPercentageLoad() > server.currentPercentageLoad() ) {
+                    theLeastLoadedServer = server;
+                }
+            }
+
+        }
+        return theLeastLoadedServer;
     }
 
 }
