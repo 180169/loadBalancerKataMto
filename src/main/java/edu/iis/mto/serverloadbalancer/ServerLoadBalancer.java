@@ -5,8 +5,6 @@
  */
 package edu.iis.mto.serverloadbalancer;
 
-import static edu.iis.mto.serverloadbalancer.Server.MAXIMUM_LOAD;
-
 /**
  *
  * @author Godzio
@@ -16,7 +14,7 @@ public class ServerLoadBalancer {
     public static void balance( Server[] servers, Vm[] vms ) {
         for ( Vm vm : vms ) {
             Server theLeastLoadedServer = findTheLeastLoadedServer( servers );
-            if ( theLeastLoadedServer.currentPercentageLoad() + ( (double) vm.getSize() / (double) theLeastLoadedServer.getCapacity() * MAXIMUM_LOAD ) <= MAXIMUM_LOAD ) {
+            if ( theLeastLoadedServer.haveEnoughSpace( vm ) ) {
                 theLeastLoadedServer.add( vm );
             }
         }

@@ -37,15 +37,15 @@ public class Server {
     }
 
     private double calculateLoad( Vm vm ) {
-        return (double) vm.getSize() / (double) capacity * MAXIMUM_LOAD;
+        return (double) vm.getSize() / (double) this.capacity * MAXIMUM_LOAD;
     }
 
     public int countOfVms() {
         return vms.size();
     }
 
-    public int getCapacity() {
-        return capacity;
+    boolean haveEnoughSpace( Vm vm ) {
+        return percentageLoad + calculateLoad( vm ) <= MAXIMUM_LOAD;
     }
 
 }
