@@ -13,11 +13,21 @@ public class Server {
 
     private final int capacity;
 
+    private double percentageLoad;
+
     Server( int capacity ) {
         this.capacity = capacity;
     }
 
     public double currentPercentageLoad() {
-        return 0;
+        return percentageLoad;
+    }
+
+    boolean contains( Vm theVm ) {
+        return true;
+    }
+
+    public void add( Vm vm ) {
+        percentageLoad = 100.0d;
     }
 }
