@@ -12,7 +12,7 @@ package edu.iis.mto.serverloadbalancer;
 public class Server {
 
     private final int capacity;
-
+    public static final double MAXIMUM_LOAD = 100.0d;
     private double percentageLoad;
 
     Server( int capacity ) {
@@ -28,6 +28,10 @@ public class Server {
     }
 
     public void add( Vm vm ) {
-        percentageLoad = (double) vm.getSize() / (double) capacity * 100.0d;
+        percentageLoad = calculateLoad( vm );
+    }
+
+    private double calculateLoad( Vm vm ) {
+        return (double) vm.getSize() / (double) capacity * MAXIMUM_LOAD;
     }
 }
