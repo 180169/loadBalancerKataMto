@@ -78,6 +78,17 @@ public class ServerLoadBalancerTest {
         assertThat( secondServer.contains( theVm ), is( true ) );
     }
 
+    @Test
+    public void serverOverloaded() {
+        Server theServer = a( server().withCapacity( 10 ).withInitialLoad( 90.0d ) );
+        Vm theVm = a( vm().ofSize( 5 ) );
+
+        balance( serverList( theServer ), vmList( theVm ) );
+
+        assertThat( theServer.currentPercentageLoad(), equalTo( 90.0d ) );
+        assertThat( theServer.contains( theVm ), is( false ) );
+    }
+
     public static Server[] serverList( Server... servers ) {
         return servers;
     }
