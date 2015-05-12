@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static edu.iis.mto.serverloadbalancer.ServerBuilder.server;
 import static edu.iis.mto.serverloadbalancer.ServerLoadBalancer.balance;
+import static edu.iis.mto.serverloadbalancer.VmBuilder.vm;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -41,10 +42,6 @@ public class ServerLoadBalancerTest {
 
     private Vm a( VmBuilder builder ) {
         return builder.build();
-    }
-
-    private VmBuilder vm() {
-        return new VmBuilder();
     }
 
 }
