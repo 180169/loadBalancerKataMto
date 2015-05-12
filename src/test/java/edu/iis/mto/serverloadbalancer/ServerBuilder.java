@@ -22,4 +22,8 @@ class ServerBuilder {
         return new Server( capacity );
     }
 
+    public static ServerBuilder server() {
+        return new ServerBuilder();
+    }
+
 }
