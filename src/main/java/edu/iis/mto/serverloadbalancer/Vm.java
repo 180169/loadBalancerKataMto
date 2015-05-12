@@ -17,4 +17,7 @@ public class Vm {
         this.size = size;
     }
 
+    public int getSize() {
+        return size;
+    }
 }

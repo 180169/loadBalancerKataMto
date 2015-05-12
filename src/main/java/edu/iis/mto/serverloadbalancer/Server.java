@@ -28,6 +28,6 @@ public class Server {
     }
 
     public void add( Vm vm ) {
-        percentageLoad = 100.0d;
+        percentageLoad = (double) vm.getSize() / (double) capacity * 100.0d;
     }
 }
