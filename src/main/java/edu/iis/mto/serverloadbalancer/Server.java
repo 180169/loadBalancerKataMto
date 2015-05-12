@@ -27,8 +27,8 @@ public class Server {
         return percentageLoad;
     }
 
-    boolean contains( Vm theVm ) {
-        return true;
+    boolean contains( Vm vm ) {
+        return vms.contains( vm );
     }
 
     public void add( Vm vm ) {
