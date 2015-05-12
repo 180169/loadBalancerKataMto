@@ -36,6 +36,17 @@ public class ServerLoadBalancerTest {
         assertThat( theServer.contains( theVm ), is( true ) );
     }
 
+    @Test
+    public void oneServerHalfFilledByOneVm() {
+        Server theServer = a( server().withCapacity( 20 ) );
+        Vm theVm = a( vm().ofSize( 10 ) );
+
+        balance( new Server[]{ theServer }, new Vm[]{ theVm } );
+
+        assertThat( theServer.currentPercentageLoad(), equalTo( 50.0d ) );
+        assertThat( theServer.contains( theVm ), is( true ) );
+    }
+
     private Server a( ServerBuilder builder ) {
         return builder.build();
     }
