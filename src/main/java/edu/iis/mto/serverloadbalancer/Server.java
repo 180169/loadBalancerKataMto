@@ -43,4 +43,9 @@ public class Server {
     public int countOfVms() {
         return vms.size();
     }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
 }
