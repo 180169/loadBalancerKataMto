@@ -54,7 +54,7 @@ public class ServerLoadBalancerTest {
         Vm secondVm = a( vm().ofSize( 10 ) );
         Vm thirdVm = a( vm().ofSize( 30 ) );
 
-        balance( new Server[]{ theServer }, new Vm[]{ firstVm, secondVm, thirdVm } );
+        balance( new Server[]{ theServer }, vmList( firstVm, secondVm, thirdVm ) );
 
         assertThat( theServer.currentPercentageLoad(), equalTo( 100.0d ) );
         assertThat( theServer.countOfVms(), equalTo( 3 ) );
@@ -62,6 +62,10 @@ public class ServerLoadBalancerTest {
         assertThat( theServer.contains( secondVm ), is( true ) );
         assertThat( theServer.contains( thirdVm ), is( true ) );
 
+    }
+
+    public static Vm[] vmList( Vm... vms ) {
+        return vms;
     }
 
     private Server a( ServerBuilder builder ) {

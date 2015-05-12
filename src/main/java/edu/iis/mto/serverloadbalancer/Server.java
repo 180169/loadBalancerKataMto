@@ -17,7 +17,7 @@ public class Server {
     private final int capacity;
     public static final double MAXIMUM_LOAD = 100.0d;
     private double percentageLoad;
-    private List<Vm> vms = new ArrayList<Vm>();
+    private final List<Vm> vms = new ArrayList<Vm>();
 
     Server( int capacity ) {
         this.capacity = capacity;
