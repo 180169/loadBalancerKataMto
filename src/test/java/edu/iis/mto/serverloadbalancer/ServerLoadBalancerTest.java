@@ -89,6 +89,31 @@ public class ServerLoadBalancerTest {
         assertThat( theServer.contains( theVm ), is( false ) );
     }
 
+    @Test
+    public void serversAndVms() {
+        Server firstServer = a( server().withCapacity( 120 ).withInitialLoad( 50 ) );
+        Server secondServer = a( server().withCapacity( 100 ) );
+
+        Vm firstVm = a( vm().ofSize( 50 ) );
+        Vm secondVm = a( vm().ofSize( 60 ) );
+        Vm thirdVm = a( vm().ofSize( 150 ) );
+
+        balance( serverList( firstServer, secondServer ), vmList( firstVm, secondVm, thirdVm ) );
+
+        assertThat( firstServer.currentPercentageLoad(), equalTo( 100.0d ) );
+        assertThat( secondServer.currentPercentageLoad(), equalTo( 50.0d ) );
+
+        assertThat( firstServer.contains( thirdVm ), is( false ) );
+        assertThat( secondServer.contains( thirdVm ), is( false ) );
+        
+        assertThat( firstServer.contains( secondVm ), is( true ) );
+        assertThat( secondServer.contains( secondVm ), is( false ) );
+        
+        assertThat( firstServer.contains( firstVm ), is( false ) );
+        assertThat( secondServer.contains( firstVm ), is( true ) );
+
+    }
+
     public static Server[] serverList( Server... servers ) {
         return servers;
     }
