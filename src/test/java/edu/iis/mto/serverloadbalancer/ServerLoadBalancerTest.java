@@ -1,16 +1,24 @@
 package edu.iis.mto.serverloadbalancer;
 
+import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-import org.junit.Test;
-
 public class ServerLoadBalancerTest {
-	@Test
-	public void itCompiles() {
-		assertThat(true, equalTo(true));
-	}
 
+    @Test
+    public void itCompiles() {
+        assertThat( true, equalTo( true ) );
+    }
+
+    @Test
+    public void emptyServerWithExpectedLoadEqual0() {
+        Server theServer = a( server().withCapacity( 5 ) );
+
+        ServerLoadBalancer.balance( serverList( theServer ), vmList() );
+
+        assertThat( theServer, hasCurrentPercentageLoad( 0.0d ) );
+    }
 
 }
