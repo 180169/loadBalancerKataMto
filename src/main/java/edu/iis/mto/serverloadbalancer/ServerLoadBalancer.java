@@ -13,7 +13,17 @@ class ServerLoadBalancer {
 
     static void balance( Server[] serverList, Vm[] vmList ) {
         for ( Vm vm : vmList ) {
-            serverList[0].addVm( vm );
+            Server theLeastLoadedServer = null;
+            for ( Server server : serverList ) {
+                if ( theLeastLoadedServer == null ) {
+                    theLeastLoadedServer = server;
+                } else if ( theLeastLoadedServer.currentPercentageLoad > server.currentPercentageLoad ) {
+                    theLeastLoadedServer = server;
+                }
+
+            }
+
+            theLeastLoadedServer.addVm( vm );
 
         }
     }
