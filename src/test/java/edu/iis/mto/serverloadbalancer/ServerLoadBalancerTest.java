@@ -64,9 +64,6 @@ public class ServerLoadBalancerTest {
         assertThat( theServer.contains( firstVm ), is( true ) );
         assertThat( theServer.contains( secondVm ), is( true ) );
         assertThat( theServer.contains( thirdVm ), is( true ) );
-
-    private Matcher<Server> contains( Vm theVm ) {
-        return new ContainMatcher( theVm );
     }
 
     private Matcher<Server> hasVmCountOf( int expectedCount ) {
