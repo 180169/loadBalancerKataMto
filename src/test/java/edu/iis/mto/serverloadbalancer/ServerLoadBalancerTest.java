@@ -38,6 +38,18 @@ public class ServerLoadBalancerTest {
         assertThat( theServer.contains( theVm ), is( true ) );
     }
 
+    @Test
+    public void serverHalfFilledByVm() {
+        Server theServer = a( server().withCapacity( 50 ) );
+        Vm theVm = a( vm().ofSize( 25 ) );
+
+        balance( serverList( theServer ), vmList( theVm ) );
+
+        assertThat( theServer, hasCurrentPercentageLoad( 50.0d ) );
+        assertThat( theServer.contains( theVm ), is( true ) );
+
+    }
+
     private Matcher<Server> contains( Vm theVm ) {
         return new ContainMatcher( theVm );
     }
