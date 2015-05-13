@@ -12,7 +12,7 @@ package edu.iis.mto.serverloadbalancer;
 class Server {
 
     double currentPercentageLoad = 0;
-    private final int capacity;
+    public final int capacity;
 
     Server( int capacity ) {
         this.capacity = capacity;
