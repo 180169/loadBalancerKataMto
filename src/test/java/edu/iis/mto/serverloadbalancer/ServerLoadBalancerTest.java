@@ -94,6 +94,29 @@ public class ServerLoadBalancerTest {
 
     }
 
+    @Test
+    public void serversAndMachines() {
+        Server firstServer = a( server().withCapacity( 50 ).withInitialPercentageLoad( 50.0d ) );
+        Server secondServer = a( server().withCapacity( 20 ) );
+        Vm firstVm = a( vm().ofSize( 15 ) );
+        Vm secondVm = a( vm().ofSize( 25 ) );
+        Vm thirdVm = a( vm().ofSize( 35 ) );
+
+        balance( serverList( firstServer, secondServer ), vmList( firstVm, secondVm, thirdVm ) );
+        
+        assertThat( firstServer, hasCurrentPercentageLoad( 100.0d ) );
+        assertThat( secondServer, hasCurrentPercentageLoad( 75.0d ) );
+        
+        assertThat( firstServer.contains( firstVm ), is( false ) );
+        assertThat( secondServer.contains( firstVm ), is( true ) );
+        
+        assertThat( firstServer.contains( secondVm ), is( true ) );
+        assertThat( secondServer.contains( secondVm ), is( false ) );
+        
+        assertThat( firstServer.contains( thirdVm ), is( false ) );
+        assertThat( secondServer.contains( thirdVm ), is( false ) );
+    }
+
     private Server a( ServerBuilder builder ) {
         return builder.build();
     }
