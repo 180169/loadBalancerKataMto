@@ -33,8 +33,14 @@ class Server {
     }
 
     public void addVm( Vm vm ) {
-        currentPercentageLoad += (double) vm.size / (double) capacity * MAXIMUM_LOAD;
+        vms.add( vm );
+        recalculateLoad( vm );
     }
+
+    public void recalculateLoad( Vm vm ) {
+        currentPercentageLoad += (double) vm.getSize() / (double) capacity * MAXIMUM_LOAD;
+    }
+
     public int vmCount() {
         return vms.size();
     }
