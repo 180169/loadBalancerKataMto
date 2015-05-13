@@ -14,7 +14,7 @@ import java.util.List;
  */
 class Server {
 
-    private static final double MAXIMUM_LOAD = 100.0;
+    public static final double MAXIMUM_LOAD = 100.0;
 
     double currentPercentageLoad = 0;
     private final int capacity;
