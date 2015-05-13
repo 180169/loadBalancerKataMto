@@ -66,6 +66,21 @@ public class ServerLoadBalancerTest {
         assertThat( theServer.contains( thirdVm ), is( true ) );
     }
 
+    @Test
+    public void twoServerOneMachineLocatedOnLessLoadedServer() {
+        Server firstServer = a( server().withCapacity( 40 ).withInitialPercentageLoad( 50.0d ) );
+        Server secondServer = a( server().withCapacity( 25 ) );
+        Vm theVm = a( vm().ofSize( 5 ) );
+
+        balance( serverList( firstServer, secondServer ), vmList( theVm ) );
+
+        assertThat( firstServer, hasCurrentPercentageLoad( 50.0d ) );
+        assertThat( secondServer, hasCurrentPercentageLoad( 20.0d ) );
+        assertThat( secondServer, hasVmCountOf( 1 ) );
+        assertThat( firstServer.contains( theVm ), is( false ) );
+        assertThat( secondServer.contains( theVm ), is( true ) );
+
+    }
 
     private Server a( ServerBuilder builder ) {
         return builder.build();
