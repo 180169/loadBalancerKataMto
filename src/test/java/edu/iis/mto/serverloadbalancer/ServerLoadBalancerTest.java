@@ -82,6 +82,18 @@ public class ServerLoadBalancerTest {
 
     }
 
+    @Test
+    public void serverOverloadedShouldNotContainVm() {
+        Server theServer = a( server().withCapacity( 75 ).withInitialPercentageLoad( 100 ) );
+        Vm theVm = a( vm().ofSize( 25 ) );
+
+        balance( serverList( theServer ), vmList( theVm ) );
+
+        assertThat( theServer, hasCurrentPercentageLoad( 100.0d ) );
+        assertThat( theServer.contains( theVm ), is( false ) );
+
+    }
+
     private Server a( ServerBuilder builder ) {
         return builder.build();
     }
