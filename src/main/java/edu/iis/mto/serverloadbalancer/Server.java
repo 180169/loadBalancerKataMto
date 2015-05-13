@@ -21,6 +21,10 @@ class Server {
     public double getCurrentPercentageLoad() {
         return currentPercentageLoad;
     }
+
+    boolean contains( Vm theVm ) {
+        return true;
+    }
     
     
 

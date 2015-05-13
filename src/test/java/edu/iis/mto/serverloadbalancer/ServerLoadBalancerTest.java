@@ -1,5 +1,6 @@
 package edu.iis.mto.serverloadbalancer;
 
+import org.hamcrest.Matcher;
 import org.junit.Test;
 
 import static edu.iis.mto.serverloadbalancer.ServerBuilder.server;
@@ -36,7 +37,15 @@ public class ServerLoadBalancerTest {
         assertThat( theServer.contains( theVm ), is( true ) );
     }
 
+    private Matcher<Server> contains( Vm theVm ) {
+        return new ContainMatcher( theVm );
+    }
+
     private Server a( ServerBuilder builder ) {
+        return builder.build();
+    }
+
+    private Vm a( VmBuilder builder ) {
         return builder.build();
     }
 
@@ -44,8 +53,12 @@ public class ServerLoadBalancerTest {
         return new Server[]{ server };
     }
 
-    private Vm[] vmList() {
-        return new Vm[]{};
+    private Vm[] vmList( Vm... vms ) {
+        return vms;
+    }
+
+    private VmBuilder vm() {
+        return new VmBuilder();
     }
 
 }
