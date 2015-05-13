@@ -33,7 +33,7 @@ class hasCurrentPercetageLoad extends TypeSafeMatcher<Server> {
 
     @Override
     protected void describeMismatchSafely( Server item, Description mismatchDescription ) {
-        mismatchDescription.appendText( "a server with current percentage load of " ).appendValue( item.currentPercentageLoad );
+        mismatchDescription.appendText( "a server with current percentage load of " ).appendValue( item.getCurrentPercentageLoad() );
     }
 
     public static Matcher<Server> hasCurrentPercentageLoad( double expectedLoad ) {
