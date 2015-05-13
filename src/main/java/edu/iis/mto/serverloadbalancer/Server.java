@@ -17,7 +17,7 @@ class Server {
     public static final double MAXIMUM_LOAD = 100.0;
 
     double currentPercentageLoad = 0;
-    private final int capacity;
+    final int capacity;
     private final List<Vm> vms = new ArrayList<Vm>();
 
     Server( int capacity ) {
