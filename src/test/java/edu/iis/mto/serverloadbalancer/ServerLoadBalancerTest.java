@@ -50,8 +50,27 @@ public class ServerLoadBalancerTest {
 
     }
 
+    @Test
+    public void serverWithFewVm() {
+        Server theServer = a( server().withCapacity( 100 ) );
+        Vm firstVm = a( vm().ofSize( 10 ) );
+        Vm secondVm = a( vm().ofSize( 25 ) );
+        Vm thirdVm = a( vm().ofSize( 35 ) );
+
+        balance( serverList( theServer ), vmList( firstVm, secondVm, thirdVm ) );
+
+        assertThat( theServer, hasCurrentPercentageLoad( 70.0d ) );
+        assertThat( theServer, hasVmCountOf( 3 ) );
+        assertThat( theServer.contains( firstVm ), is( true ) );
+        assertThat( theServer.contains( secondVm ), is( true ) );
+        assertThat( theServer.contains( thirdVm ), is( true ) );
+
     private Matcher<Server> contains( Vm theVm ) {
         return new ContainMatcher( theVm );
+    }
+
+    private Matcher<Server> hasVmCountOf( int expectedCount ) {
+        return new hasVmCountOfMatcher( expectedCount );
     }
 
     private Server a( ServerBuilder builder ) {
