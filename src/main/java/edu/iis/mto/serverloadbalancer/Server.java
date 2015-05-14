@@ -14,7 +14,7 @@ import java.util.List;
  */
 class Server {
 
-    private static final double MAXIMUM_LOAD = 100.0d;
+    public static final double MAXIMUM_LOAD = 100.0d;
     private final int capacity;
     double percentageLoad;
     private final List<Vm> vms = new ArrayList<Vm>();
