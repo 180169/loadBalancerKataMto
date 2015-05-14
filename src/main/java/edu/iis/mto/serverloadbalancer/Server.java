@@ -11,7 +11,7 @@ package edu.iis.mto.serverloadbalancer;
  */
 class Server {
 
-    private final int capacity;
+    final int capacity;
     double percentageLoad;
 
     Server( int capacity ) {

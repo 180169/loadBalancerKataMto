@@ -13,7 +13,7 @@ class ServerLoadBalancer {
 
     static void balance( Server[] serverList, Vm[] vmList ) {
         if ( vmList.length > 0 ) {
-            serverList[0].percentageLoad = 100.0d;
+            serverList[0].percentageLoad = (double) vmList[0].size / (double) serverList[0].capacity * 100.0d;
         }
     }
 
