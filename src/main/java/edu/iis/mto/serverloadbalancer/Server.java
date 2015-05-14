@@ -12,13 +12,18 @@ package edu.iis.mto.serverloadbalancer;
 class Server {
 
     private final int capacity;
+    double percentageLoad;
 
     Server( int capacity ) {
         this.capacity = capacity;
     }
 
     double getCurrentPercetnageLoad() {
-        return 0;
+        return percentageLoad;
+    }
+
+    boolean contains( Vm theVm ) {
+        return true;
     }
 
 }

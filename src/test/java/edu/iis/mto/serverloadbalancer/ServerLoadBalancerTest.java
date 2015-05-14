@@ -31,21 +31,29 @@ public class ServerLoadBalancerTest {
 
         balance( serverList( theServer ), vmList( theVm ) );
 
-        assertThat( theServer, hasCurrentPercentageLoad( 0 ) );
+        assertThat( theServer, hasCurrentPercentageLoad( 100.0d ) );
         assertThat( "server should contains the vm", theServer.contains( theVm ) );
 
     }
 
-    private Vm[] vmList() {
-        return new Vm[]{};
+    private Vm[] vmList( Vm... vms ) {
+        return vms;
     }
 
     private Server a( ServerBuilder builder ) {
         return builder.build();
     }
 
+    private Vm a( VmBuilder builder ) {
+        return builder.build();
+    }
+
     private Server[] serverList( Server server ) {
         return new Server[]{ server };
+    }
+
+    private VmBuilder vm() {
+        return new VmBuilder();
     }
 
 }

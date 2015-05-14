@@ -9,12 +9,20 @@ package edu.iis.mto.serverloadbalancer;
  *
  * @author Godzio
  */
-class ServerLoadBalancer {
+class VmBuilder {
 
-    static void balance( Server[] serverList, Vm[] vmList ) {
-        if ( vmList.length > 0 ) {
-            serverList[0].percentageLoad = 100.0d;
-        }
+    private int size;
+
+    public VmBuilder() {
     }
+    public VmBuilder ofSize( int size ) {
+        this.size = size;
+        return this;
+    }
+
+    public Vm build() {
+        return new Vm( size );
+    }
+
 
 }
