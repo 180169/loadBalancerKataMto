@@ -11,7 +11,8 @@ package edu.iis.mto.serverloadbalancer;
  */
 class Server {
 
-    final int capacity;
+    private static final double MAXIMUM_LOAD = 100.0d;
+    private final int capacity;
     double percentageLoad;
 
     Server( int capacity ) {
@@ -24,6 +25,10 @@ class Server {
 
     boolean contains( Vm theVm ) {
         return true;
+    }
+
+    void addVm( Vm vm ) {
+        percentageLoad = (double) vm.size / (double) capacity * MAXIMUM_LOAD;
     }
 
 }
