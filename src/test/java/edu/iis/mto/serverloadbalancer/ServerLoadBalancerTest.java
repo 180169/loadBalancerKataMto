@@ -24,6 +24,18 @@ public class ServerLoadBalancerTest {
         assertThat( theServer, hasCurrentPercentageLoad( 0 ) );
     }
 
+    @Test
+    public void serverFilledByOneMachine() {
+        Server theServer = a( server().withCapacity( 100 ) );
+        Vm theVm = a( vm().ofSize( 100 ) );
+
+        balance( serverList( theServer ), vmList( theVm ) );
+
+        assertThat( theServer, hasCurrentPercentageLoad( 0 ) );
+        assertThat( "server should contains the vm", theServer.contains( theVm ) );
+
+    }
+
     private Vm[] vmList() {
         return new Vm[]{};
     }
