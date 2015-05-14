@@ -37,6 +37,17 @@ public class ServerLoadBalancerTest {
 
     }
 
+    @Test
+    public void serverHalfFilledByVm() {
+        Server theServer = a( server().withCapacity( 50 ) );
+        Vm theVm = a( vm().ofSize( 25 ) );
+
+        balance( serverList( theServer ), vmList( theVm ) );
+
+        assertThat( theServer, hasCurrentPercentageLoad( 50.0d ) );
+        assertThat( "server should contains the vm", theServer.contains( theVm ) );
+    }
+
     private Vm[] vmList( Vm... vms ) {
         return vms;
     }
@@ -52,6 +63,5 @@ public class ServerLoadBalancerTest {
     private Server[] serverList( Server server ) {
         return new Server[]{ server };
     }
-
 
 }
