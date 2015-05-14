@@ -65,6 +65,19 @@ public class ServerLoadBalancerTest {
 
     }
 
+    @Test
+    public void twoServersAndOneMachineLocatedOnLessLoadedServer() {
+        Server firstServer = a( server().withCapacity( 20 ).withInitialLoad( 50.0d ) );
+        Server secondServer = a( server().withCapacity( 50 ) );
+        Vm theVm = a( vm().ofSize( 5 ) );
+
+        balance( serverList( firstServer, secondServer ), vmList( theVm ) );
+
+        assertThat( firstServer, hasCurrentPercentageLoad( 50.0d ) );
+        assertThat( secondServer, hasCurrentPercentageLoad( 10.0d ) );
+        assertThat( "server should contains the vm", secondServer.contains( theVm ) );
+    }
+
     private Vm[] vmList( Vm... vms ) {
         return vms;
     }
