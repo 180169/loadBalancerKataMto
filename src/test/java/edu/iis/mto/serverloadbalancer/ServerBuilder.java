@@ -5,6 +5,8 @@
  */
 package edu.iis.mto.serverloadbalancer;
 
+import static edu.iis.mto.serverloadbalancer.VmBuilder.vm;
+
 /**
  *
  * @author Godzio
@@ -12,6 +14,7 @@ package edu.iis.mto.serverloadbalancer;
 class ServerBuilder implements builder<Server> {
 
     private int capacity;
+    private double initialLoad;
 
     public ServerBuilder() {
     }
@@ -22,11 +25,22 @@ class ServerBuilder implements builder<Server> {
     }
 
     public Server build() {
-        return new Server( capacity );
+        Server server = new Server( capacity );
+        if ( initialLoad != 0 ) {
+            int stubVmSize = (int) ( initialLoad * capacity / 100.0d );
+            server.addVm( vm().ofSize( stubVmSize ).build() );
+        }
+
+        return server;
     }
 
     public static ServerBuilder server() {
         return new ServerBuilder();
+    }
+
+    ServerBuilder withInitialLoad( double initialLoad ) {
+        this.initialLoad = initialLoad;
+        return this;
     }
 
 }
