@@ -78,6 +78,18 @@ public class ServerLoadBalancerTest {
         assertThat( "server should contains the vm", secondServer.contains( theVm ) );
     }
 
+    @Test
+    public void serverOverloadedToTakeAnotherMachine() {
+        Server theServer = a( server().withCapacity( 2 ).withInitialLoad( 100.0d ) );
+        Vm theVm = a( vm().ofSize( 2 ) );
+        
+        balance( serverList( theServer ), vmList( theVm ) );
+        
+        assertThat( theServer, hasCurrentPercentageLoad( 100.0d ) );
+        
+        assertThat( "server should not contains the vm", !theServer.contains( theVm ) );
+    }
+
     private Vm[] vmList( Vm... vms ) {
         return vms;
     }
