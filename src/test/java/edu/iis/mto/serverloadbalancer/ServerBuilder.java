@@ -39,7 +39,7 @@ class ServerBuilder implements builder<Server> {
         return new ServerBuilder();
     }
 
-    ServerBuilder withInitialLoad( double initialLoad ) {
+    public ServerBuilder withInitialLoad( double initialLoad ) {
         this.initialLoad = initialLoad;
         return this;
     }

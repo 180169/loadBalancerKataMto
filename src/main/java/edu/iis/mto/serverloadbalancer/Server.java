@@ -16,22 +16,22 @@ class Server {
 
     public static final double MAXIMUM_LOAD = 100.0d;
     private final int capacity;
-    double percentageLoad;
+    private double percentageLoad;
     private final List<Vm> vms = new ArrayList<Vm>();
 
     Server( int capacity ) {
         this.capacity = capacity;
     }
 
-    double getCurrentPercetnageLoad() {
+    public double getCurrentPercetnageLoad() {
         return percentageLoad;
     }
 
-    boolean contains( Vm theVm ) {
+    public boolean contains( Vm theVm ) {
         return vms.contains( theVm );
     }
 
-    void addVm( Vm vm ) {
+    public void addVm( Vm vm ) {
         vms.add( vm );
         recalculateLoad( vm );
     }
@@ -49,7 +49,7 @@ class Server {
     }
 
     private double calculateAdditionalLoad( Vm vm ) {
-        return (double) vm.size / (double) capacity * MAXIMUM_LOAD;
+        return (double) vm.getSize() / (double) capacity * MAXIMUM_LOAD;
     }
 
 }
