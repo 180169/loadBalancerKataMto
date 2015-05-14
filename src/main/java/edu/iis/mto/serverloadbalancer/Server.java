@@ -37,7 +37,7 @@ class Server {
     }
 
     private void recalculateLoad( Vm vm ) {
-        percentageLoad = calculateAdditionalLoad( vm );
+        percentageLoad += calculateAdditionalLoad( vm );
     }
 
     public int vmCount() {
