@@ -9,12 +9,8 @@ package edu.iis.mto.serverloadbalancer;
  *
  * @author Godzio
  */
-class Vm {
+public interface builder<T> {
 
-    final int size;
-
-    Vm( int size ) {
-        this.size = size;
-    }
+    public T build();
 
 }
