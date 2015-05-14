@@ -28,7 +28,7 @@ class Server {
     }
 
     boolean contains( Vm theVm ) {
-        return true;
+        return vms.contains( theVm );
     }
 
     void addVm( Vm vm ) {
@@ -42,6 +42,10 @@ class Server {
 
     public int vmCount() {
         return vms.size();
+    }
+
+    boolean canTake( Vm vm ) {
+        return ( percentageLoad + (double) vm.size / (double) capacity * MAXIMUM_LOAD <= MAXIMUM_LOAD );
     }
 
 }
