@@ -5,6 +5,9 @@
  */
 package edu.iis.mto.serverloadbalancer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Godzio
@@ -14,6 +17,7 @@ class Server {
     private static final double MAXIMUM_LOAD = 100.0d;
     private final int capacity;
     double percentageLoad;
+    private final List<Vm> vms = new ArrayList<Vm>();
 
     Server( int capacity ) {
         this.capacity = capacity;
@@ -28,7 +32,12 @@ class Server {
     }
 
     void addVm( Vm vm ) {
+        vms.add( vm );
         percentageLoad = (double) vm.size / (double) capacity * MAXIMUM_LOAD;
+    }
+
+    public int vmCount() {
+        return vms.size();
     }
 
 }
