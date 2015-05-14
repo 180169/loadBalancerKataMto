@@ -82,12 +82,40 @@ public class ServerLoadBalancerTest {
     public void serverOverloadedToTakeAnotherMachine() {
         Server theServer = a( server().withCapacity( 2 ).withInitialLoad( 100.0d ) );
         Vm theVm = a( vm().ofSize( 2 ) );
-        
+
         balance( serverList( theServer ), vmList( theVm ) );
-        
+
         assertThat( theServer, hasCurrentPercentageLoad( 100.0d ) );
-        
+
         assertThat( "server should not contains the vm", !theServer.contains( theVm ) );
+    }
+
+    @Test
+    public void serversAndVms() {
+        Server firstServer = a( server().withCapacity( 200 ).withInitialLoad( 50.0d ) );
+        Server secondServer = a( server().withCapacity( 500 ) );
+        Vm firstVm = a( vm().ofSize( 750 ) );
+        Vm secondVm = a( vm().ofSize( 100 ) );
+        Vm thirdVm = a( vm().ofSize( 300 ) );
+        Vm fourthVm = a( vm().ofSize( 50 ) );
+
+        balance( serverList( firstServer, secondServer ), vmList( firstVm, secondVm, thirdVm, fourthVm ) );
+
+        assertThat( firstServer, hasCurrentPercentageLoad( 75.0d ) );
+        assertThat( secondServer, hasCurrentPercentageLoad( 80.0d ) );
+
+        assertThat( "server should not contains the vm", !firstServer.contains( firstVm ) );
+        assertThat( "server should not contains the vm", !secondServer.contains( firstVm ) );
+
+        assertThat( "server should not contains the vm", !firstServer.contains( secondVm ) );
+        assertThat( "server should not contains the vm", secondServer.contains( secondVm ) );
+
+        assertThat( "server should not contains the vm", !firstServer.contains( thirdVm ) );
+        assertThat( "server should not contains the vm", secondServer.contains( thirdVm ) );
+        
+        assertThat( "server should not contains the vm", firstServer.contains( fourthVm ) );
+        assertThat( "server should not contains the vm", !secondServer.contains( fourthVm ) );
+
     }
 
     private Vm[] vmList( Vm... vms ) {
