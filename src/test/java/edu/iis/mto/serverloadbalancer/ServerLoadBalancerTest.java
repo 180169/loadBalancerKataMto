@@ -48,6 +48,22 @@ public class ServerLoadBalancerTest {
         assertThat( "server should contains the vm", theServer.contains( theVm ) );
     }
 
+    @Test
+    public void serverWithFewVms() {
+        Server theServer = a( server().withCapacity( 6 ) );
+        Vm firstVm = a( vm().ofSize( 1 ) );
+        Vm secondVm = a( vm().ofSize( 2 ) );
+        Vm thirdVm = a( vm().ofSize( 3 ) );
+
+        balance( serverList( theServer ), vmList( firstVm ) );
+
+        assertThat( theServer, hasVmCountOf( 3 ) );
+        assertThat( "server should contains the vm", theServer.contains( firstVm ) );
+        assertThat( "server should contains the vm", theServer.contains( secondVm ) );
+        assertThat( "server should contains the vm", theServer.contains( thirdVm ) );
+
+    }
+
     private Vm[] vmList( Vm... vms ) {
         return vms;
     }
