@@ -33,6 +33,10 @@ class Server {
 
     void addVm( Vm vm ) {
         vms.add( vm );
+        recalculateLoad( vm );
+    }
+
+    private void recalculateLoad( Vm vm ) {
         percentageLoad = (double) vm.size / (double) capacity * MAXIMUM_LOAD;
     }
 
