@@ -37,7 +37,7 @@ class Server {
     }
 
     private void recalculateLoad( Vm vm ) {
-        percentageLoad = (double) vm.size / (double) capacity * MAXIMUM_LOAD;
+        percentageLoad = calculateAdditionalLoad( vm );
     }
 
     public int vmCount() {
@@ -45,7 +45,11 @@ class Server {
     }
 
     boolean canTake( Vm vm ) {
-        return ( percentageLoad + (double) vm.size / (double) capacity * MAXIMUM_LOAD <= MAXIMUM_LOAD );
+        return ( percentageLoad + calculateAdditionalLoad( vm ) <= MAXIMUM_LOAD );
+    }
+
+    private double calculateAdditionalLoad( Vm vm ) {
+        return (double) vm.size / (double) capacity * MAXIMUM_LOAD;
     }
 
 }
